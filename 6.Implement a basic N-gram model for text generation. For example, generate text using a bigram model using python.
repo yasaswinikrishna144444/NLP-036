@@ -1,0 +1,33 @@
+import random
+
+# Sample text for training the bigram model
+text = "The quick brown fox jumps over the lazy dog."
+
+# Tokenize the text into words
+words = text.split()
+
+# Create a dictionary to store bigrams and their frequencies
+bigrams = {}
+for i in range(len(words) - 1):
+    bigram = (words[i], words[i + 1])
+    if bigram in bigrams:
+        bigrams[bigram] += 1
+    else:
+        bigrams[bigram] = 1
+
+# Generate text using the bigram model
+generated_text = []
+start_word = random.choice(words)  # Choose a random starting word
+generated_text.append(start_word)
+current_word = start_word
+while True:
+    next_word_candidates = [bigram[1] for bigram in bigrams if bigram[0] == current_word]
+    if next_word_candidates:
+        next_word = random.choice(next_word_candidates)
+        generated_text.append(next_word)
+        current_word = next_word
+    else:
+        break
+
+# Print the generated text
+print(' '.join(generated_text))
